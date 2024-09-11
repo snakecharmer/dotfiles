@@ -22,6 +22,7 @@ binaries=(
   "fnm"
   "stow"
   "jandedobbeleer/oh-my-posh/oh-my-posh:oh-my-posh"
+  "pyenv"
 )
 
 for item in "${binaries[@]}"; do
