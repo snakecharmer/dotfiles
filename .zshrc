@@ -78,7 +78,7 @@ alias ls="eza --icons=always"
 eval $(thefuck --alias)
 eval $(thefuck --alias fk)
 # fnm (better nvm)
-eval "$(fnm env --use-on-cd)"
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # TODO:
 if command -v pyenv 1>/dev/null 2>&1; then
@@ -103,7 +103,7 @@ function cd() {
   builtin cd "$@"
 
   if [[ -z "$VIRTUAL_ENV" ]] ; then
-    ## If env folder is found then activate the vitualenv
+    ## If env folder is found then activate the virtualenv
       if [[ -d ./.env ]] ; then
         source ./.env/bin/activate
       fi
@@ -115,6 +115,11 @@ function cd() {
       if [[ "$PWD"/ != "$parentdir"/* ]] ; then
         deactivate
       fi
+  fi
+
+  # Check for .nvmrc and use fnm if it exists
+  if [[ -f ./.nvmrc ]] ; then
+    eval "$(fnm env --use-on-cd --shell zsh)"
   fi
 }
 
