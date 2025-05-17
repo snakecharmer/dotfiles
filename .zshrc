@@ -1,4 +1,9 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":${HOME}/.zsh/completions:"* ]]; then export FPATH="${HOME}/.zsh/completions:$FPATH"; fi
 # Set the directory we want to store zinit and plugins
+export PATH="/opt/homebrew/bin:$PATH"
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
@@ -92,12 +97,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-export C_INCLUDE_PATH=/opt/homebrew/Cellar/librdkafka/1.9.1/include
-export LIBRARY_PATH=/opt/homebrew/Cellar/librdkafka/1.9.1/lib
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/awscli@1/bin:$PATH"
-
-export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
 function cd() {
   builtin cd "$@"
@@ -130,3 +131,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
