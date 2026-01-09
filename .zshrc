@@ -1,5 +1,3 @@
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # Add deno completions to search path
 if [[ ":$FPATH:" != *":${HOME}/.zsh/completions:"* ]]; then export FPATH="${HOME}/.zsh/completions:$FPATH"; fi
 # Set the directory we want to store zinit and plugins
@@ -64,7 +62,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Standard Aliases
 alias c='clear'
-alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
+alias stree='/Applications/SourceTree.app/Contents/Resources/stree' 
 # fzf
 # ---- fzf  ----
 # Ctr-T 
@@ -124,6 +122,51 @@ function cd() {
   fi
 }
 
+# === Update Zinit & Plugins Function ===
+zsh-update() {
+  echo "🔄 Updating Zinit and plugins..."
+  zinit self-update && zinit update --all
+  echo "✅ All Zinit plugins updated!"
+}
+
+# === Optional: Add system-wide updates too ===
+dev-update() {
+  echo "🛠️ Updating system tools..."
+  brew update && brew upgrade
+  rustup update
+  starship upgrade
+  zsh-update
+  brew-pacakages
+  echo "🎉 Everything's fresh and clean!"
+}
+
+brew-packages() {
+  echo "🔄 Installing Default Brew packages..."
+  binaries=(
+    "fzf"
+    "zoxide"
+    "bat"
+    "git-delta:delta"
+    "eza"
+    "thefuck:fuck"
+    "fnm"
+    "stow"
+    "jandedobbeleer/oh-my-posh/oh-my-posh:oh-my-posh"
+    "pyenv"
+    "dug"
+    "gitui"
+  )
+
+  for item in "${binaries[@]}"; do
+    IFS=":" read -r brew_name bin_name <<< "${item}"
+    bin_name="${bin_name:-$brew_name}"
+    if [[ ! -f "/opt/homebrew/bin/$bin_name" ]]; then
+      brew install "$brew_name"
+    fi
+  done
+  echo "✅ All Default Brew pacakages are updated!"
+}
+
 # pnpm
 export PNPM_HOME="${HOME}/Library/pnpm"
 case ":$PATH:" in
@@ -131,5 +174,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+# Add .local/bin
+export LOCAL_BIN="${HOME}/.local/bin"
+export PATH="$LOCAL_BIN:$PATH"

@@ -12,26 +12,7 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-binaries=(
-  "fzf"
-  "zoxide"
-  "bat"
-  "git-delta:delta"
-  "eza"
-  "thefuck:fuck"
-  "fnm"
-  "stow"
-  "jandedobbeleer/oh-my-posh/oh-my-posh:oh-my-posh"
-  "pyenv"
-)
-
-for item in "${binaries[@]}"; do
-  IFS=":" read -r brew_name bin_name <<< "${item}"
-  bin_name="${bin_name:-$brew_name}"
-  if [[ ! -f "/opt/homebrew/bin/$bin_name" ]]; then
-    brew install "$brew_name"
-  fi
-done
+brew-packages
 
 brew install --cask font-fira-code-nerd-font
 ```
