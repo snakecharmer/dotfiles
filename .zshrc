@@ -29,9 +29,10 @@ autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
-OMP_THEME="powerlevel10k_rainbow"
+#OMP_THEME="powerlevel10k_rainbow"
 #OMP_THEME="atomic"
-eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/${OMP_THEME}.omp.json)"
+#eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/${OMP_THEME}.omp.json)"
+eval "$(starship init zsh)"
 
 # Keybindings
 bindkey -e
@@ -40,7 +41,7 @@ bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
 # History
-HISTSIZE=5000
+HISTSIZE=1000000000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -51,6 +52,8 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+setopt autocd
+autoload -U compinit; compinit
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -151,10 +154,10 @@ brew-packages() {
     "thefuck:fuck"
     "fnm"
     "stow"
-    "jandedobbeleer/oh-my-posh/oh-my-posh:oh-my-posh"
     "pyenv"
     "dug"
     "gitui"
+    "starship"
   )
 
   for item in "${binaries[@]}"; do
@@ -177,3 +180,12 @@ esac
 # Add .local/bin
 export LOCAL_BIN="${HOME}/.local/bin"
 export PATH="$LOCAL_BIN:$PATH"
+# =======
+eval "$(joyia completions zsh)"
+. "$HOME/.deno/env"
+export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
+export PATH="$PATH:$HOME/.deno/bin/deno"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/gar0002p/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
