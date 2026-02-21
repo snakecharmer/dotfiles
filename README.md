@@ -24,7 +24,7 @@ Change font in your profile in iTerm2 to use all the icons :)
 First, check out the dotfiles repo in your $HOME directory using git
 
 ```
-$ git clone git@github.com:snakecharmer/dotfiles.git
+$ git clone https://github.com/snakecharmer/dotfiles.git
 $ cd dotfiles
 ```
 
